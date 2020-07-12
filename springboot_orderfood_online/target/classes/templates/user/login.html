@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--图标库-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+
+    <link th:href="@{/login/css/style.css}" rel="stylesheet">
+    <style>
+        .box{
+            width: 300px;
+            height: 130px;
+            border: 1px solid;
+            margin: 30px auto;
+            position: relative;
+        }
+        .code{
+            width: 120px;
+            height: 40px;
+            background-color: #D6E3BC;
+            border: 2px solid;
+            text-align: center;
+            font-size: 24px;
+            line-height: 40px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            letter-spacing:3px;
+        }
+        .box a{
+            position: absolute;
+            left: 160px;
+            top: 30px;
+            color: green;
+        }
+        .box input{
+            width: 180px;
+            height: 35px;
+            top: 75px;
+            left: 58px;
+            position: absolute;
+            text-align: center;
+        }
+        .box button{
+            width: 50px;
+            height: 26px;
+            position: absolute;
+            top: 90px;
+            right:26px ;
+            background-color: green;
+            color: #fff;
+            border: 1px solid gray;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="main">
+
+
+    <div class="container a-container" id="a-container">
+        <form class="form" id="b-form" th:action="@{/login}" method="post" onsubmit="return login()">
+            <h2 class="form_title title">会员登录</h2>
+            <div class="form__icons">
+                <span class="glyphicon glyphicon-user"></span>
+            </div>  <!--th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"-->
+            <span class="form__span" style="color: red" th:if="${param.error}">用户名或者密码错误！</span>
+            <span class="form__span" th:if="${param.error == null}">请输入你的账号密码以进行登录</span>
+<!--            <span class="form__span" th:if="${!param.error}">请输入你的账号密码以进行登录</span>-->
+            <span class="form__span" th:if="${msg}" th:text="${msg}" style="color: red"></span>
+            <input class="form__input" id="login-uUsername" name="uUsername" type="text" placeholder="用户名：">
+            <input class="form__input" id="login-uPassword" name="uPassword" type="password" placeholder="密　码：">
+            <div class="box">
+                <div class="code" id="checkCode"></div>
+                <a href="#"  id="btn" >看不清，换一张</a>
+                <input th:if="${msg}" style="top:66px" type="text" placeholder="请输入验证码" id="Input">
+                <input th:if="${msg==null}" type="text" placeholder="请输入验证码" id="Input">
+<!--                <button id="subBtn" onsubmit="return false">验证</button>-->
+            </div>
+            <input class="button" id="subBtn" type="submit" style="margin-top: -10px;position: relative;top:0px" value="马上登录">
+        </form>
+    </div>
+
+    <div class="container b-container" id="b-container">
+        <form class="form" id="a-form" th:action="@{/register}" method="post" onsubmit="return register()">
+            <h2 class="form_title title">会员注册</h2>
+            <div class="form__icons">
+                <span class="glyphicon glyphicon-edit"></span>
+            </div>
+            <span class="form__span">你正在进行注册！</span>
+            <input class="form__input" id="register-uUsername" name="uUsername" type="text" placeholder="用户名：">
+            <input class="form__input" id="register-uPassword" name="uPassword" type="password" placeholder="密　码：">
+            <input class="form__input" id="register-Re-uPassword" name="Re-Passowrd" type="password" placeholder="重复密码：">
+            <span style="margin-top: 10px">
+                <input class="my_radio" name="uRole" type="radio" value="ROLE_admin">
+                <span style="font-size: 20px">老板</span>　　　　
+                <input class="my_radio" name="uRole" type="radio" value="ROLE_user" checked>
+                <span style="font-size: 20px">顾客</span>
+            </span>
+            <input class="button" type="submit" value="立即注册" style="background: #eea236">
+        </form>
+    </div>
+
+    <div class="switch" id="switch-cnt">
+        <div class="switch__circle"></div>
+        <div class="switch__circle switch__circle--t"></div>
+        <div class="switch__container " id="switch-c1">
+            <h2 class="switch__title title">Hello Friend !</h2>
+            <p class="switch__description description">我还没账号，立马去注册！</p>
+            <button class="switch__button button switch-btn" style="background: #eea236 ">去注册</button>
+        </div>
+        <div class="switch__container is-hidden" id="switch-c2">
+            <h2 class="switch__title title">Welcome Back !</h2>
+            <p class="switch__description description">我已有账号，马上去登录！</p>
+            <button class="switch__button button switch-btn">去登录</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    let flag = false;
+
+    function login() {
+      let uUsername = $('#login-uUsername').val();
+      let uPassword = $('#login-uPassword').val();
+      if(uUsername === ""){
+          alert("用户名不能为空，请重新输入！");
+          return false;
+      }
+      if(uPassword === ""){
+          alert("密码不能为空，请重新输入！");
+          return false;
+      }
+      if($('#Input').val() === ""){
+          alert("请输入验证码！");
+          return false;
+      }
+      if(!flag){
+          alert("验证码不正确！");
+          return false;
+      }
+          return true;
+    }
+
+    function register() {
+        let uUsername = $('#register-uUsername').val();
+        let uPassword = $('#register-uPassword').val();
+        let ReuPassword = $('#register-Re-uPassword').val();
+        if(uUsername === ""){
+            alert("用户名不能为空！");
+            return false;
+        }
+        const reg1 = /^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,12}$/;
+        if(!reg1.test(uUsername)){
+            alert("用户名格式：字母开头，包涵数字的6-12位字符！");
+            return false;
+        }
+        if(uPassword === ""){
+            alert("密码不能为空！");
+            return false;
+        }
+        const reg2 = /^(?![^0-9]+$)[\x21-x7e]{6,18}$/;
+        if(!reg2.test(uPassword)){
+            alert("密码长度为：6-18位字符");
+            return false;
+        }
+        if(ReuPassword === ""){
+            alert("请再次输入密码！");
+            return false;
+        }
+        if(uPassword != ReuPassword){
+            alert("两次输入的密码不正确，请重新输入！");
+            return false;
+        }
+        return true;
+    }
+
+    /*实现点击“看不清，换一张”随机生成六位验证码（可包含数字和大小写字母）*/
+    this.code;
+    var Input=document.querySelector("#Input");
+    var btn=document.querySelector("#btn");
+    var subBtn=document.querySelector("#subBtn");
+    window.onload=function () {
+        yzm.createCode();
+    }
+    init();
+    function init() {
+        subBtn.onclick=function () {
+            yzm.isLegal()
+        }
+        btn.onclick=function () {
+            yzm.createCode();
+        }
+    }
+
+    var yzm={
+        createCode:function () {
+            this.code = "";//存放验证码
+            var codeLength = 4;//设置验证码长度为6
+            var checkCode = document.querySelector("#checkCode");
+            var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R','S','T', 'U', 'V', 'W', 'X', 'Y', 'Z');//验证码要随机挑选的字符
+            for (var i = 0; i < codeLength; i++) {
+                var charIndex = Math.floor(Math.random() * 52);//随机产生0-52之间的整数
+                this.code += codeChars[charIndex];//将随机指向我们规定的字符添加到code容器里
+            }
+            if (checkCode) {
+                checkCode.className = "code";
+                checkCode.innerHTML = this.code;
+            }
+        },
+        isLegal:function () {
+            var InputValue=Input.value;
+            /*console.log(InputValue);
+            console.log(this.code);*/
+            if(InputValue.toLowerCase()==this.code.toLowerCase()){
+                flag = true;
+            }else {
+                flag = false;
+            }
+        }
+    }
+</script>
+
+<script th:src="@{/login/js/script.js}"></script>
+</body>
+</html>
+

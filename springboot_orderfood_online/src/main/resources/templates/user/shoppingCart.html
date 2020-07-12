@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>我的购物车</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <!--图标库-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+    <!--响应式框架-->
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/bootstrap-grid.min.css}"/>
+    <!--主要样式-->
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/demo.css}">
+
+    <style>
+        body {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<!--顶部栏-->
+<div th:replace="~{commons/commons::topbar(active='shoppingCart.html')}"></div>
+
+<!--顶部标题卡-->
+<div th:replace="~{commons/commons::topCard}"></div>
+<section>
+    <div class="container-fluid" style="width: 92%;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive m-t">
+                    <!--                    <table class="table invoice-table">-->
+                    <table th:if="${products.size() != 0}" class="table table-hover table-bordered" contenteditable="false">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">清单</th>
+                            <th style="text-align: center;">缩略图</th>
+                            <th style="text-align: center;">数量</th>
+                            <th style="text-align: center;">单价</th>
+                            <th style="text-align: center;">总价</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="product:${products}">
+                                <td style="text-align: center;">
+                                    <div th:text="${product.getScName()}"></div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <img style="width: 35px;height: 35px;" th:src="@{${product.getScImg()}}">
+                                </td>
+                                <td style="text-align: center;">
+                                    <a th:href="@{'/shoppingCart-minus?uId='+${product.getUId()}+'&mdId='+${product.getMdId()}}">
+                                        <span class="glyphicon glyphicon-minus-sign"></span>
+                                    </a>　
+                                    <span th:text="${product.getScAmount()}"></span>　
+                                    <a th:href="@{'/shoppingCart-plus?uId='+${product.getUId()}+'&mdId='+${product.getMdId()}}">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                    </a>
+                                </td>
+                                <td style="text-align: center;" th:text="${'￥' + product.getScPrice()}"></td>
+                                <td style="text-align: center;" th:text="${'￥' + product.getScPrice()*product.getScAmount()}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div th:if="${products.size() != 0}" class="text-right" style="height: 40px">
+                    <span><strong>总计：</strong></span>&yen;
+                    <span style="text-decoration:underline;color: red" th:text="${total}"></span>
+                    <span><strong>元</strong></span>
+                </div>
+
+                <div th:if="${products.size() == 0}" class="well m-t" style="text-align: center;color: grey">购物车空空如也，赶快去点餐吧~</div>
+
+                <div class="text-right" style="height: 60px">
+                    <a th:if="${products.size() == 0}" class="btn btn-warning" href="/"><i class="fa fa-dollar"></i>去点餐</a>
+                    <a th:if="${products.size() != 0}" class="btn btn-warning" href="/"><i class="fa fa-dollar"></i>继续点餐</a>
+                    <button th:if="${products.size() != 0}" class="btn btn-primary" data-toggle="modal" data-target="#fillInfoModal">
+                        <i class="fa fa-dollar" ></i>马上下单</button>
+                </div>
+
+                <div th:if="${products.size() != 0}" class="well m-t" style="text-align: center;color: grey">下单后请在30分钟内完成付款，否则订单会自动取消</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--填充收货信息模态框-->
+<div class="modal fade" id="fillInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="margin: 0 auto;width: 450px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="addTypeModalLabel">请编辑收货信息（可前往个人中心修改）：</h4>
+            </div>
+            <div class="modal-body">
+                <!--模块体填充数据-->
+                <form action="">
+                    <input type="hidden" id="fill-uId" th:value="${#authentication.getPrincipal().uId}">
+                    <div class="form-group">
+                        <label for="fill-name" class="control-label">姓名：</label>
+                        <input type="text"  id="fill-name" th:value="${#authentication.getPrincipal().uName}" name="odName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="fill-phone" class="control-label">手机号：</label>
+                        <input type="text"  id="fill-phone" th:value="${#authentication.getPrincipal().uPhone}" name="odPhone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="fill-address" class="control-label">地址：</label>
+                        <input type="text" id="fill-address" th:value="${#authentication.getPrincipal().uAddress}" name="odAddress" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label for="fill-remarks" class="control-label">备注：</label>
+                        <input type="text" id="fill-remarks" name="odRemarks" class="form-control"  placeholder="有啥要求可以备注说明哦~">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="toOrder()">确认下单</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--页脚-->
+<div th:replace="~{commons/commons::footbar}"></div>
+
+<script>
+    function toOrder() {
+        let postData = {};
+        let uId = $('#fill-uId').val();
+        let odName = $('#fill-name').val();
+        let odPhone = $('#fill-phone').val();
+        let odAddress = $('#fill-address').val();
+        let odRemarks = $('#fill-remarks').val();
+        if (odName === "") {
+            alert("姓名不能为空！");
+            return;
+        }
+        if (odPhone === "") {
+            alert("手机号不能为空");
+            return;
+        }
+        if (odAddress === "") {
+            alert("地址不能为空");
+            return;
+        }
+        postData['odName'] = odName;
+        postData['odPhone'] = odPhone;
+        postData['odAddress'] = odAddress;
+        postData['odRemarks'] = odRemarks;
+        postData['uId'] = uId;
+        console.log(postData);
+        $.ajax({
+            url: "/toOrder",
+            type: 'POST',
+            data: postData,
+            success: function (arg) {
+                alert(arg);
+                window.location.reload();
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

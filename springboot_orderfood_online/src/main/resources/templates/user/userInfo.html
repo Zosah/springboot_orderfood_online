@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <!--图标库-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+    <!--响应式框架-->
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/bootstrap-grid.min.css}"/>
+    <!--主要样式-->
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/demo.css}">
+
+    <style>
+        body {
+            color: black;
+        }
+    </style>
+
+</head>
+<body>
+<!--顶部栏-->
+<div th:replace="~{commons/commons::topbar(active='userInfo.html')}"></div>
+
+<!--顶部标题卡-->
+<div th:replace="~{commons/commons::topCard}"></div>
+
+<div style="padding: 0px 35px 0px 35px">
+    <!--模态框+ajax 提交-->
+    <div style="display: block;text-align:right; margin-bottom: 10px">
+        <button class="btn btn-success" data-toggle="modal" data-target="#addUser">
+            <span class="glyphicon glyphicon-plus"></span> 添加用户
+        </button>
+    </div>
+    <table id="userInfoTable" class="table table-hover table-bordered" contenteditable="false">
+        <thead>
+        <tr>
+            <th style="text-align: center;">编号</th>
+            <th style="text-align: center;">角色</th>
+            <th style="text-align: center;">用户名</th>
+            <th style="text-align: center;">密码</th>
+            <th style="text-align: center;">姓名</th>
+            <th style="text-align: center;">手机</th>
+            <th style="text-align: center;">地址</th>
+            <th style="text-align: center;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user:${page.getRecords()}"> <!--class="warning"-->
+            <td style="text-align: center;" th:text="${user.getUId()}"></td>
+            <td style="text-align: center;" th:text="${user.getURole()}"></td>
+            <td style="text-align: center;" th:text="${user.getUUsername()}"></td>
+            <td style="text-align: center;" th:text="${user.getUPassword()}"></td>
+            <td style="text-align: center;" th:text="${user.getUName()}"></td>
+            <td style="text-align: center;" th:text="${user.getUPhone()}"></td>
+            <td style="text-align: center;" th:text="${user.getUAddress()}"></td>
+            <td style="text-align: center;">
+                <!--                							restful风格写法 普通传参写法：@{/emp/id=(${emp.getId()})}-->
+                <a href="#">
+                    <button class="btn btn-warning" id="edit_table_btn" data-toggle="modal" data-target="#edUser" onclick="getData()">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        编辑
+                    </button>
+                </a>
+                <a th:href="@{'/deleteUser/'+${user.getUId()}}" onClick="return confirm('确定删除?');">
+                    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> 删除</button>
+                </a>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--翻页插件-->
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column" style="text-align: center;">
+            <div style="font-size: 16px;color:grey;">
+                总查询到&nbsp;<span th:text="${page.getTotal()}"></span>&nbsp;条数据
+            </div>
+            <!--遍历页数-->
+            <!--th:each="i:${#numbers.sequence(1,page.getPages())}"-->
+            <ul class="pagination">
+                <li>
+                    <a th:if="${!page.hasPrevious()}" href="javascript:alert('已经是第一页啦！');">上一页</a>
+                    <a th:if="${page.hasPrevious()}" th:href="@{'/userInfo?pageNum='+ ${page.getCurrent() - 1}}">上一页</a>
+                </li>
+                <li th:each="i:${#numbers.sequence(1,page.getPages())}">
+                    <a  th:if="${page.getCurrent() == i}" th:href="@{'/uuserInfo?pageNum='+ ${i}}" th:text="${i}" style="background: #aefff8"></a>
+                    <a  th:if="${!(page.getCurrent() == i)}" th:href="@{'/userInfo?pageNum='+ ${i}}" th:text="${i}"></a>
+                </li>
+                <li>
+                    <a th:if="${!page.hasNext()}" href="javascript:alert('已经是最后一页啦！');">下一页</a>
+                    <a th:if="${page.hasNext()}" th:href="@{'/userInfo?pageNum='+ ${page.getCurrent() + 1}}">下一页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<!--新添用户 模态框-->
+<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="addModalLabel">新添用户</h4>
+            </div>
+            <div class="modal-body">
+                <!--模块体填充数据-->
+                <form action="">
+                    <div class="form-group">
+                        <label for="add-uUsername" class="control-label">用户名：</label>
+                        <input type="text" name="uUsername" class="form-control" id="add-uUsername">
+                    </div>
+                    <div class="form-group">
+                        <label for="add-uPassword" class="control-label">密码：</label>
+                        <input type="text" name="uPassword" class="form-control" id="add-uPassword">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">角色：</label>
+                        普通用户<input type="radio" name="uRole" value="ROLE_user" style="width: 20px" checked>
+                        管理员<input type="radio" name="uRole" value="ROLE_admin" style="width: 20px">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="bindSave()">新添</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--编辑用户信息 模态框-->
+<div class="modal fade" id="edUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="ed-ModalLabel">修改用户信息</h4>
+            </div>
+            <div class="modal-body">
+                <!--模块体填充数据-->
+                <form action="">
+                    <input type="hidden" name="uId" id="ed-uId">
+                    <div class="form-group">
+                        <label for="ed-uUsername" class="control-label">用户名：</label>
+                        <input type="text" name="uUsername" class="form-control" id="ed-uUsername" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="ed-uPassword" class="control-label">密码：</label>
+                        <input type="text" name="uPassword" class="form-control" id="ed-uPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="ed-uName" class="control-label">姓名：</label>
+                        <input type="text" name="uName" class="form-control" id="ed-uName">
+                    </div>
+                    <div class="form-group">
+                        <label for="ed-uPhone" class="control-label">手机：</label>
+                        <input type="text" name="uPhone" class="form-control" id="ed-uPhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="ed-uAddress" class="control-label">地址：</label>
+                        <input type="text" name="uAddress" class="form-control" id="ed-uAddress">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="bindEdit()">完成更新</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--页脚-->
+<div th:replace="~{commons/commons::footbar}"></div>
+
+<!--添加新用户-->
+<script th:src="@{/main/js/userInfo.js}"></script>
+
+</body>
+</html>

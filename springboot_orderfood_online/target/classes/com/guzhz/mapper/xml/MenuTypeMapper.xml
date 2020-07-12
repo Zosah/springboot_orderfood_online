@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guzhz.mapper.MenuTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.guzhz.entity.MenuType">
+        <id column="mt_id" property="mtId" />
+        <result column="mt_name" property="mtName" />
+        <result column="mt_deleted" property="mtDeleted" />
+        <result column="mt_version" property="mtVersion" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        mt_id, mt_name, mt_deleted, mt_version
+    </sql>
+
+</mapper>

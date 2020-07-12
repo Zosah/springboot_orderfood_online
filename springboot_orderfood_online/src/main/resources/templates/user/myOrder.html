@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>我的订单</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <!--图标库-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+    <!--响应式框架-->
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/bootstrap-grid.min.css}"/>
+    <!--主要样式-->
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/demo.css}">
+
+    <style>
+        body {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<!--顶部栏-->
+<div th:replace="~{commons/commons::topbar(active='myOrder.html')}"></div>
+
+<!--顶部标题卡-->
+<div th:replace="~{commons/commons::topCard}"></div>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive m-t">
+                    <!--                    <table class="table invoice-table">-->
+                    <table th:if="${myOrders.size() != 0}" class="table table-hover table-bordered" contenteditable="false">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">订单号</th>
+                            <th style="text-align: center;">下单时间</th>
+                            <th style="text-align: center;">菜品详细</th>
+                            <th style="text-align: center;">取餐人</th>
+                            <th style="text-align: center;">手机号</th>
+                            <th style="text-align: center;">总支付</th>
+                            <th style="text-align: center;">我的备注</th>
+                            <th style="text-align: center;">订单状态</th>
+                            <th style="text-align: center;">是否送达</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order:${myOrders}">
+                            <td style="text-align: center;" th:text="${order.getOdNo()}"></td>
+                            <td style="text-align: center;" th:text="${#dates.format(order.getOdCreateTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td style="text-align: center;" th:text="${order.getOdDetail()}"></td>
+                            <td style="text-align: center;" th:text="${order.getOdName()}"></td>
+                            <td style="text-align: center;" th:text="${order.getOdPhone()}"></td>
+                            <td style="text-align: center;" th:text="${order.getOdTotal()}"></td>
+                            <td style="text-align: center;" th:text="${order.getOdRemarks()}"></td>
+                            <td style="text-align: center;" th:if="${order.getOdStatus() == 0}">已下单，等待商家接单</td>
+                            <td style="text-align: center;color: red" th:if="${order.getOdStatus() == 1}">已接单，等待送达</td>
+                            <td style="text-align: center;color: grey" th:if="${order.getOdStatus() == 2}">已完结</td>
+
+                            <td style="text-align: center;" th:if="${order.getOdStatus() == 0}">
+                                <button th:name="${order.getOdId()}" class="btn btn-default" >待接单</button>
+                            </td>
+                            <td style="text-align: center;" th:if="${order.getOdStatus() == 1}">
+                                <button onclick="oneToTwo(this)" th:name="${order.getOdId()}" class="btn btn-danger">确认送达</button>
+                            </td>
+                            <td style="text-align: center;" th:if="${order.getOdStatus() == 2}">
+                                <button th:name="${order.getOdId()}" class="btn btn-default" style="background: #c8cac6">已完结</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-right" style="height: 40px">
+                    <span><strong>总支出：</strong></span>&yen;
+                    <span style="text-decoration:underline;color: red" th:text="${total}"></span>
+                    <span><strong>元</strong></span>
+                </div>
+
+                <div th:if="${myOrders.size() == 0}" class="well m-t" style="text-align: center;color: grey">你还没有下单记录，赶快去点餐吧~</div>
+
+                <div class="text-right" style="height: 60px">
+                    <a class="btn btn-warning" href="/"><i class="fa fa-dollar"></i>去点餐</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--页脚-->
+<div th:replace="~{commons/commons::footbar}"></div>
+
+<script>
+    /*思路：遍历的按钮绑定一个方法，虽然方法共有，但是传入的this不一样，可以通过name的值获得想要的不同的值*/
+    function oneToTwo(btn) {
+        let odId =  $(btn).attr("name");
+        $.ajax({
+            url: "/changeStatusToTwo",
+            type: 'POST',
+            data: {'odId':odId},
+            success: function (arg) {
+                console.log(arg);
+                alert(arg);
+                window.location.reload();
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot_orderfood_end?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+# 关闭缓存
+  thymeleaf:
+    cache=false: true
+
+  favicon:
+    enabled: false
+  # 上传文件的基本配置
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 50MB
+      max-request-size: 100MB
+      resolve-lazily: false #是否在文件或参数访问时懒惰地解析多部分请求 spring.mvc.format.date: yyyy-MM-dd HH:mm:ss
+
+
+mybatis-plus:       # 日志log
+#    configuration:
+#      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    global-config:  # 配置逻辑删除
+      db-config:
+        logic-delete-value: 1
+        logic-not-delete-value: 0
+    mapper-locations: classpath:/com/guzhz/mapper/xml/*.xml
+

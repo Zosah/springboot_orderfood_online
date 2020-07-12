@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>广药订餐系统</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <!--图标库-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+    <!--响应式框架-->
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/bootstrap-grid.min.css}" />
+    <!--主要样式-->
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/demo.css}">
+
+    <style>
+        body {
+            color: black;
+        }
+        #zxd_x{width:20px; height:20px;text-align:center;font-size:16px;color:red;position:absolute;right:0px; top:0px;cursor:pointer;}
+    </style>
+</head>
+<body>
+    <!--顶部栏-->
+    <div th:replace="~{commons/commons::topbar}"></div>
+
+    <!--顶部标题卡-->
+    <div th:replace="~{commons/commons::topCard}"></div>
+
+    <div style="z-index:999;display: block; position: fixed; left: 0px; top: 283px;">
+        <div id="zxd_x">
+            <a title="点击关闭"><b></b></a></div>
+            <div class="content">
+                <img style="width: 200px;height: 200px" src="/images/no_Image_default.jpg">
+                <div style="text-align: center;color: red">公告：订餐时间为</div>
+                <div style="text-align: center;color: red">9:00 - 22:00</div>
+            </div>
+    </div>
+
+    <section>
+        <div class="container" style="margin-top:30px;" th:each="type:${types}">
+            <div class="row" style="margin-bottom: 30px">
+                <h3 class="text-center" style="color: #777777"> ———— [[${type.mtName}]] ———— </h3>
+            </div>
+            <div class="row">
+                <div th:each="menu:${menus}">
+                    <!--分类-->
+                    <div class="col-md-3 col-sm-6" th:if="${type.getMtId() == menu.getMenuType().getMtId()}" >
+                        <div class="product-grid">
+                            <div class="product-image">
+                                <a href="#" class="image">
+                                    <img class="pic-1" th:src="@{${menu.getMdUrl()}}">
+                                </a>
+                                <span class="product-new-label" th:if="${menu.getMdNew() == '1'}">new</span>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="title"><a href="#" th:text="${menu.getMdName()}"></a></h3>
+                                <div class="price" th:text="${'￥' + menu.getMdPrice()}" style="color: red"></div>
+                                <div class="price" th:text="'库存：'+${menu.getMdAmount()}" style="color: #ffc500;font-size: 15px;position: relative;left: -50px"></div>
+                                <ul class="rating" style="position:relative; left: -13px">
+                                    <li class="fas fa-star" th:each="i:${#numbers.sequence(1,menu.getMdStar())}"></li>
+                                    <li class="far fa-star" th:if="${menu.getMdStar()<'5'}" th:each="i:${#numbers.sequence(menu.getMdStar(),4)}"></li>
+                                </ul>
+                                <a onclick="getDetail(this)" id="getDetail" href="#successTips" data-toggle="modal" class="add-to-cart">
+                                    <i class="fas fa-shopping-cart"></i> <span>加入购物车</span>
+                                    <input type="hidden"  th:value="${menu.getMdName()}">
+                                    <input type="hidden"  th:value="${menu.getMdAmount()}">
+                                    <input type="hidden"  th:value="${menu.getMdPrice()}">
+                                    <input type="hidden"  th:value="${menu.getMdUrl()}">
+                                    <input type="hidden"  th:value="${menu.getMdId()}">
+                                    <input type="hidden"  sec:authorize="isAuthenticated()" th:value="${#authentication.getPrincipal().uId}">   <!--登录后获得用户id-->
+                                    <input type="hidden"  sec:authorize="isAuthenticated()" th:value="${#authentication.getPrincipal().uRole}">   <!--登录后判断账号权限-->
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--触发提示模态框-->
+    <div class="container" sec:authorize="hasRole('user')">     <!--只有提供用户权限的账号使用-->
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="modal fade" id="successTips" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 400px;margin: 0 auto">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel" style="text-align: center;">
+                                    加入购物车成功
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <span id="tips-name" style="color: red"></span>
+                                <div>
+                                    <span id="tips-price" style="color: red"><br /></span>
+                                    <div style="float: right;position:relative; color: grey">
+                                        详细请前往购物车查看！
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--页脚-->
+    <div th:replace="~{commons/commons::footbar}"></div>
+
+    <script>
+        function getDetail(a) {
+            let list = $(a).children('input');      //获得当前元素下的所有子input
+            if (list.length == 5){                  //5个说明处于未登录状态
+                alert("请先登录，再订餐哦~");
+            }
+            if($(list[6]).val() == "ROLE_admin"){
+                alert("你就是老板啦，你不能下单哦~");
+            } else{
+                let mdName = $(list[0]).val();
+                let mdPrice = $(list[2]).val();
+                $('#tips-name').html("【名称】"+mdName);
+                $('#tips-price').html("【价格】"+mdPrice+'元');
+                /*发起请求*/
+                let postData = {};
+                postData['scName'] = mdName;
+                postData['scAmount'] = 1;
+                postData['scPrice'] = mdPrice;
+                postData['scImg'] = $(list[3]).val();
+                postData['mdId'] = $(list[4]).val();
+                postData['uId'] = $(list[5]).val();
+                $.ajax({
+                    url: "/addShoppingCart",
+                    type: 'POST',
+                    data: postData,
+                    success: function (arg) {
+                        console.log(arg);
+                        // window.location.reload();
+                    }
+                })
+            }
+        }
+    </script>
+</body>
+</html>

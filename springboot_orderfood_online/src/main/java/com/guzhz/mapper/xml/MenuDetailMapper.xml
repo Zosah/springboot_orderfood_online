@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guzhz.mapper.MenuDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.guzhz.entity.MenuDetail">
+        <id column="md_id" property="mdId" />
+        <result column="md_name" property="mdName" />
+        <result column="md_price" property="mdPrice" />
+        <result column="md_amount" property="mdAmount" />
+        <result column="md_url" property="mdUrl" />
+        <result column="md_new" property="mdNew" />
+        <result column="md_star" property="mdStar" />
+        <result column="md_deleted" property="mdDeleted" />
+        <result column="md_version" property="mdVersion" />
+        <result column="mt_id" property="mtId"/>
+        <association property="menuType" javaType="com.guzhz.entity.MenuType">
+            <id column="mt_id" property="mtId"/>
+            <result column="mt_name" property="mtName"/>
+            <result column="mt_deleted" property="mtDeleted"/>
+            <result column="mt_version" property="mtVersion"/>
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        md_id, md_name, md_price, md_amount, md_url, md_new, md_star, md_deleted, md_version
+    </sql>
+
+    <select id="selectByType" parameterType="int" resultMap="BaseResultMap">
+        select md_id, md_name, md_price, md_amount, md_url, md_new, md_star, md_deleted, md_version,
+               b.mt_id, mt_name, mt_deleted, mt_version
+        from menu_detail a, menu_type b
+        where a.mt_id = b.mt_id and b.mt_id = #{mtId}
+    </select>
+
+</mapper>

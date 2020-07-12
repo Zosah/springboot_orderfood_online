@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<!--顶部栏-->
+<div id="top" th:fragment="topbar">
+    <nav class="nanbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid" >
+            <div class="collapse navbar-collapse" style="padding-top: 15px;padding-bottom: 15px;">
+                <div class="navbar-header">
+                    <div class="collapse navbar-collapse" >
+                        <a th:href="@{/main}" class="navbar-brand">OrderFoodOnline</a>
+                    </div>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/main}">首页</a></li>
+                    <li sec:authorize="hasRole('admin')" th:class="${active=='menuManage.html' ? 'active' : ''}"><a th:href="@{/menuManage}">菜单管理</a></li>
+                    <li sec:authorize="hasRole('admin')" th:class="${active=='orderManage.html' ? 'active' : ''}"><a th:href="@{/orderManage}">订单管理</a></li>
+                    <li sec:authorize="hasRole('admin')" th:class="${active=='userInfo.html' ? 'active' : ''}"><a th:href="@{/userInfo}">用户管理</a></li>
+                    <li sec:authorize="hasRole('user')" th:class="${active=='shoppingCart.html' ? 'active' : ''}"><a th:href="@{'/shoppingCart?uId='+${#authentication.getPrincipal().uId}}">我的购物车</a></li>
+                    <li sec:authorize="hasRole('user')" th:class="${active=='myOrder.html' ? 'active' : ''}"><a th:href="@{'/myOrder?uId='+${#authentication.getPrincipal().uId}}">我的订单</a></li>
+                    <li sec:authorize="isAuthenticated()" th:class="${active=='myInfo.html' ? 'active' : ''}">
+                        <a th:href="@{/myInfo}">个人中心</a></li>
+                    <li sec:authorize="!isAuthenticated()">
+                        <a class="item" th:href="@{/toLogin}">
+                            <i class="address card icon"></i> 登录
+                        </a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                            <a class="item" th:href="@{/logout}">
+                                <i class="sign-out icon"></i> 注销
+                            </a>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <input type="text" name="" class="form-control" placeholder="you can search content">
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!--大横幅-->
+<section style="padding-top:100px;" th:fragment="topCard">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h2 sec:authorize="isAuthenticated()">
+                        Hello, 欢迎你，“<span sec:authentication="principal.username"></span>”
+                    </h2>
+                    <p sec:authorize="isAuthenticated()">
+                        在这里，你可以尽情的吃喝玩乐~
+                    </p>
+                    <h2 sec:authorize="!isAuthenticated()">
+                        未登录！
+                    </h2>
+                    <p sec:authorize="!isAuthenticated()">
+                        您需要登录才能进行订餐哦~
+                    </p>
+                    <img sec:authorize="isAuthenticated()" th:src="@{${#authentication.getPrincipal().uUrl}}" style="display: inline; float: right; margin-top: -90px" alt="100x100" width="100px" height="100px" class="img-circle" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--页脚-->
+<div class="container-fluid text-center" style="margin-top: 40px;margin-bottom: 20px" th:fragment="footbar">
+    <a href="#top"><img style="width: 95%" th:src="@{/main/images/banner.jpg}" alt="banner"></a>
+</div>
+</html>

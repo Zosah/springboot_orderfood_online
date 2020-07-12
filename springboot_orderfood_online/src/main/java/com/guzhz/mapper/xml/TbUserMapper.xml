@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guzhz.mapper.TbUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.guzhz.entity.TbUser">
+        <id column="u_id" property="uId" />
+        <result column="u_username" property="uUsername" />
+        <result column="u_password" property="uPassword" />
+        <result column="u_role" property="uRole" />
+        <result column="u_name" property="uName" />
+        <result column="u_phone" property="uPhone" />
+        <result column="u_address" property="uAddress" />
+        <result column="u_money" property="uMoney" />
+        <result column="u_url" property="uUrl" />
+        <result column="u_deleted" property="uDeleted" />
+        <result column="u_version" property="uVersion" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        u_id, u_username, u_password, u_role, u_name, u_phone, u_address, u_money, u_url, u_deleted, u_version
+    </sql>
+
+</mapper>

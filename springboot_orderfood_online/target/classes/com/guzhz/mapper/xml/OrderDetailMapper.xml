@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guzhz.mapper.OrderDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.guzhz.entity.OrderDetail">
+        <id column="od_id" property="odId" />
+        <result column="od_no" property="odNo" />
+        <result column="od_createTime" property="odCreatetime" />
+        <result column="od_detail" property="odDetail" />
+        <result column="od_name" property="odName" />
+        <result column="od_phone" property="odPhone" />
+        <result column="od_address" property="odAddress" />
+        <result column="od_remarks" property="odRemarks" />
+        <result column="od_status" property="odStatus" />
+        <result column="u_id" property="uId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        od_id, od_no, od_createTime, od_detail, od_name, od_phone, od_address, od_remarks, od_status, u_id
+    </sql>
+
+</mapper>

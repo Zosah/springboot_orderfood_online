@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="eb9cb409-296e-44fa-b8c6-87f4a325a1c7" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="springboot_orderfood_end@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="springboot_orderfood_end@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="springboot_orderfood_end@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="springboot_orderfood_end: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="springboot_orderfood_online" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Class" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="F:\Study\Book6\JavaEE\JavaUtils\m2" />
+        <option name="mavenHome" value="$PROJECT_DIR$/../../../JavaUtils/apache-maven-3.6.1" />
+        <option name="userSettingsFile" value="F:\Study\Book6\JavaEE\JavaUtils\apache-maven-3.6.1\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1dkylwcYOLgdvk4GewzybUEa8m3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/target/classes/static" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources\static" />
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources" />
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources\static\img\login" />
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources\templates\user" />
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources\templates" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\target\classes\static" />
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources\static" />
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources\static\main\images" />
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources\templates" />
+      <recent name="F:\Study\Book6\JavaEE\实验汇总\1700502114_古志周_在线订餐系统\springboot_orderfood_online\src\main\resources\static\main" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SpringbootOrderfoodOnlineApplication">
+    <configuration name="CodeGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.guzhz.utils.CodeGenerator" />
+      <module name="springboot_orderfood_online" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.guzhz.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringbootOrderfoodOnlineApplicationTests.test5" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="springboot_orderfood_online" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.guzhz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.guzhz" />
+      <option name="MAIN_CLASS_NAME" value="com.guzhz.SpringbootOrderfoodOnlineApplicationTests" />
+      <option name="METHOD_NAME" value="test5" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringbootOrderfoodOnlineApplicationTests.test6" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="springboot_orderfood_online" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.guzhz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.guzhz" />
+      <option name="MAIN_CLASS_NAME" value="com.guzhz.SpringbootOrderfoodOnlineApplicationTests" />
+      <option name="METHOD_NAME" value="test6" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringbootOrderfoodOnlineApplicationTests.test7" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="springboot_orderfood_online" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.guzhz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.guzhz" />
+      <option name="MAIN_CLASS_NAME" value="com.guzhz.SpringbootOrderfoodOnlineApplicationTests" />
+      <option name="METHOD_NAME" value="test7" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringbootOrderfoodOnlineApplicationTests.test8" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="springboot_orderfood_online" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.guzhz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.guzhz" />
+      <option name="MAIN_CLASS_NAME" value="com.guzhz.SpringbootOrderfoodOnlineApplicationTests" />
+      <option name="METHOD_NAME" value="test8" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringbootOrderfoodOnlineApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="springboot_orderfood_online" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.guzhz.SpringbootOrderfoodOnlineApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SpringbootOrderfoodOnlineApplicationTests.test8" />
+        <item itemvalue="Application.CodeGenerator" />
+        <item itemvalue="JUnit.SpringbootOrderfoodOnlineApplicationTests.test7" />
+        <item itemvalue="JUnit.SpringbootOrderfoodOnlineApplicationTests.test5" />
+        <item itemvalue="JUnit.SpringbootOrderfoodOnlineApplicationTests.test6" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eb9cb409-296e-44fa-b8c6-87f4a325a1c7" name="Default Changelist" comment="" />
+      <created>1592983539136</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592983539136</updated>
+      <workItem from="1592983541486" duration="29126000" />
+      <workItem from="1593054513474" duration="47479000" />
+      <workItem from="1593134942129" duration="934000" />
+      <workItem from="1593135994667" duration="69000" />
+      <workItem from="1593136220584" duration="11588000" />
+      <workItem from="1593150188146" duration="44000" />
+      <workItem from="1593150361769" duration="85873000" />
+      <workItem from="1593306288882" duration="22130000" />
+      <workItem from="1593342778788" duration="2937000" />
+      <workItem from="1593346349444" duration="1571000" />
+      <workItem from="1593348913257" duration="63492000" />
+      <workItem from="1593479813491" duration="64173000" />
+      <workItem from="1593591214038" duration="253000" />
+      <workItem from="1593595116016" duration="8099000" />
+      <workItem from="1593649660648" duration="9452000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="381" y="86" key="#Notifications" timestamp="1593136251944">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="381" y="86" key="#Notifications/0.0.1575.855@0.0.1575.855" timestamp="1593136251944" />
+    <state x="381" y="80" key="#Project_Structure" timestamp="1593055214763">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="381" y="80" key="#Project_Structure/0.0.1575.855@0.0.1575.855" timestamp="1593055214763" />
+    <state x="245" y="78" width="1134" height="690" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1593187149011">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="245" y="78" width="1134" height="690" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1575.855@0.0.1575.855" timestamp="1593187149011" />
+    <state x="593" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1593542348806">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="593" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1575.855@0.0.1575.855" timestamp="1593542348806" />
+    <state x="577" y="285" width="419" height="292" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1593621362053">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="577" y="285" width="419" height="292" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1575.855@0.0.1575.855" timestamp="1593621362053" />
+    <state x="101" y="106" width="1375" height="632" key="DiffContextDialog" timestamp="1593438764939">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="101" y="106" width="1375" height="632" key="DiffContextDialog/0.0.1575.855@0.0.1575.855" timestamp="1593438764939" />
+    <state x="807" y="192" width="575" height="490" key="FileChooserDialogImpl" timestamp="1593529207240">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="807" y="192" width="575" height="490" key="FileChooserDialogImpl/0.0.1575.855@0.0.1575.855" timestamp="1593529207240" />
+    <state width="1532" height="166" key="GridCell.Tab.0.bottom" timestamp="1593659698677">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1532" height="166" key="GridCell.Tab.0.bottom/0.0.1575.855@0.0.1575.855" timestamp="1593659698677" />
+    <state width="1532" height="166" key="GridCell.Tab.0.center" timestamp="1593659698677">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1532" height="166" key="GridCell.Tab.0.center/0.0.1575.855@0.0.1575.855" timestamp="1593659698677" />
+    <state width="1532" height="166" key="GridCell.Tab.0.left" timestamp="1593659698677">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1532" height="166" key="GridCell.Tab.0.left/0.0.1575.855@0.0.1575.855" timestamp="1593659698677" />
+    <state width="1532" height="166" key="GridCell.Tab.0.right" timestamp="1593659698677">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1532" height="166" key="GridCell.Tab.0.right/0.0.1575.855@0.0.1575.855" timestamp="1593659698677" />
+    <state width="1532" height="166" key="GridCell.Tab.1.bottom" timestamp="1593659698677">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1532" height="166" key="GridCell.Tab.1.bottom/0.0.1575.855@0.0.1575.855" timestamp="1593659698677" />
+    <state width="1532" height="166" key="GridCell.Tab.1.center" timestamp="1593659698677">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1532" height="166" key="GridCell.Tab.1.center/0.0.1575.855@0.0.1575.855" timestamp="1593659698677" />
+    <state width="1532" height="166" key="GridCell.Tab.1.left" timestamp="1593659698677">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1532" height="166" key="GridCell.Tab.1.left/0.0.1575.855@0.0.1575.855" timestamp="1593659698677" />
+    <state width="1532" height="166" key="GridCell.Tab.1.right" timestamp="1593659698677">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1532" height="166" key="GridCell.Tab.1.right/0.0.1575.855@0.0.1575.855" timestamp="1593659698677" />
+    <state width="1517" height="261" key="GridCell.Tab.2.bottom" timestamp="1593347939221">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1517" height="261" key="GridCell.Tab.2.bottom/0.0.1575.855@0.0.1575.855" timestamp="1593347939221" />
+    <state width="1517" height="261" key="GridCell.Tab.2.center" timestamp="1593347939221">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1517" height="261" key="GridCell.Tab.2.center/0.0.1575.855@0.0.1575.855" timestamp="1593347939221" />
+    <state width="1517" height="261" key="GridCell.Tab.2.left" timestamp="1593347939221">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1517" height="261" key="GridCell.Tab.2.left/0.0.1575.855@0.0.1575.855" timestamp="1593347939221" />
+    <state width="1517" height="261" key="GridCell.Tab.2.right" timestamp="1593347939221">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state width="1517" height="261" key="GridCell.Tab.2.right/0.0.1575.855@0.0.1575.855" timestamp="1593347939221" />
+    <state x="405" y="103" key="SettingsEditor" timestamp="1593274105519">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="405" y="103" key="SettingsEditor/0.0.1575.855@0.0.1575.855" timestamp="1593274105519" />
+    <state x="498" y="67" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1593274552692">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="498" y="67" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1575.855@0.0.1575.855" timestamp="1593274552692" />
+    <state x="101" y="106" width="1375" height="632" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1593439061240">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="101" y="106" width="1375" height="632" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1575.855@0.0.1575.855" timestamp="1593439061240" />
+    <state x="93" y="111" width="1375" height="632" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1593439061240">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="93" y="111" width="1375" height="632" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1575.855@0.0.1575.855" timestamp="1593439061240" />
+    <state x="446" y="196" key="run.anything.popup" timestamp="1593327604132">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="446" y="196" key="run.anything.popup/0.0.1575.855@0.0.1575.855" timestamp="1593327604132" />
+    <state x="448" y="83" width="672" height="676" key="search.everywhere.popup" timestamp="1593533678814">
+      <screen x="0" y="0" width="1575" height="855" />
+    </state>
+    <state x="448" y="83" width="672" height="676" key="search.everywhere.popup/0.0.1575.855@0.0.1575.855" timestamp="1593533678814" />
+  </component>
+</project>

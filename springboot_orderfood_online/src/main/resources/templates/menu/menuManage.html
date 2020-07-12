@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>菜单管理</title>
+
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+        <!--图标库-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+        <!--响应式框架-->
+        <link rel="stylesheet" type="text/css" th:href="@{/main/css/bootstrap-grid.min.css}"/>
+        <!--主要样式-->
+        <link rel="stylesheet" type="text/css" th:href="@{/main/css/demo.css}">
+        <style>
+            body {
+                color: black;
+            }
+
+            /*预览图片大小*/
+            #myImg img {
+                width: 250px;
+                height: 250px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <!--顶部栏-->
+        <div th:replace="~{commons/commons::topbar(active='menuManage.html')}"></div>
+
+        <!--顶部标题卡-->
+        <div th:replace="~{commons/commons::topCard}"></div>
+
+        <!--分类管理-->
+        <div class="container" style="width: 100%">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <span class="navbar-brand" href="" style="color: #eea236">分类列表</span>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul id="tdul" class="nav navbar-nav">
+                                <!-- TODO class="active"-->
+                                <div class="nav navbar-nav" th:each="type:${types}">
+                                    <li th:if="${type.getMtId() != mtId}">
+                                        <a th:href="@{'/menuManage?mtId='+${type.getMtId()}}"
+                                           th:id="${'mtId_' + type.getMtId()}" th:text="${type.getMtName()}"></a>
+                                    </li>
+                                    <li th:if="${type.getMtId() == mtId}" class="active">
+                                        <a th:href="@{'/menuManage?mtId='+${type.getMtId()}}"
+                                           th:id="${'mtId_' + type.getMtId()}" th:text="${type.getMtName()}"></a>
+                                    </li>
+                                </div>
+
+                            </ul>
+                            <form class="navbar-form navbar-left" id="searchForm" role="search" method="post" action="">
+                                <div class="form-group">
+                                    <input type="text" name="search" id="search-name" class="form-control" placeholder="输入名字进行搜索"/>
+                                </div>
+                                <input type="submit" class="btn btn-default" value="搜索单品">
+<!--                                <button type="submit" class="btn btn-default" >搜索单品</button>-->
+                            </form>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a th:href="@{/menuManage}">显示全部</a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理分类
+                                        <strong class="caret"></strong>
+                                    </a>
+                                    <ul class="dropdown-menu" style="min-width: 0">
+                                        <li style="margin-left: 5px">    <!--class="btn btn-success"-->
+                                            <button  data-toggle="modal" data-target="#addType">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                新增分类
+                                            </button>
+                                        </li>
+                                        <li style="margin-left: 5px">   <!-- onclick="getTypeData()" 不需要数据回写-->
+                                            <button  data-toggle="modal" data-target="#editType">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                修改类名
+                                            </button>
+                                        </li>
+                                        <li style="margin-left: 5px">
+                                            <button  data-toggle="modal" data-target="#deteleType">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                                删除分类
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+
+            <div>
+                <div class="row clearfix" th:if="${msg != 'no'}">
+                    <div class="col-md-12 column">
+                        <div class="alert alert-dismissable alert-warning" style="width: 90%; margin: 0 0 -35px 0">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4>
+                                刚刚：
+                            </h4>
+                            <span th:if="${msg == 'uploadSuccess'}">图片上传成功！</span>
+                            <span th:if="${msg == 'uploadFault'}">图片为空，更新失败！</span>
+                            <span th:if="${msg == 'searchSuccess'}">进行了搜索~</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: block;text-align:right; margin-bottom: 10px">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#addMenu">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        添加菜品
+                    </button>
+                </div>
+                <table id="menuTable" class="table table-hover table-bordered" contenteditable="false">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">编号</th>
+                            <th style="text-align: center;">菜名</th>
+                            <th style="text-align: center;">价格</th>
+                            <th style="text-align: center;">数量</th>
+                            <th style="text-align: center;">新上架</th>
+                            <th style="text-align: center;">星值</th>
+                            <th style="text-align: center;">图片</th>
+                            <th style="text-align: center;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="menu:${page.getRecords()}"> <!--class="warning"-->
+                            <td style="text-align: center;" th:text="${menu.getMdId()}"></td>
+                            <td style="text-align: center;" th:text="${menu.getMdName()}"></td>
+                            <td style="text-align: center;" th:text="${menu.getMdPrice()}"></td>
+                            <td style="text-align: center;" th:text="${menu.getMdAmount()}"></td>
+                            <td style="text-align: center;" th:text="${menu.getMdNew()}"></td>
+                            <td style="text-align: center;" th:text="${menu.getMdStar()}"></td>
+                            <td style="text-align: center;">
+                                <!--把input标签的id-->
+                                <button onclick="getMdUrl(this)" th:name="${mtId}" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#myModal">
+                                    <span class="glyphicon glyphicon-picture"></span>
+                                    查看图片
+                                </button>
+                                <input th:id="'mdUrl_'+${menu.getMdId()}" th:value="${menu.getMdUrl()}" type="hidden">
+                            </td>
+                            <td style="text-align: center;">
+                                <!-- restful风格写法 普通传参写法：@{/emp/id=(${emp.getId()})}-->
+                                <a href="#">
+                                    <button class="btn btn-warning" id="edit_table_btn" data-toggle="modal"
+                                            data-target="#edMenu" onclick="getTableData()">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        编辑
+                                    </button>
+                                </a>
+                                <a th:href="@{'/deleteOneMenu/'+${menu.getMdId()}+'/'+${mtId}}"
+                                   onClick="return confirm('确定删除?');">
+                                    <button class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        删除
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--翻页插件-->
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column" style="text-align: center;">
+                        <div style="font-size: 16px;color:grey;">
+                            总查询到&nbsp;<span th:text="${page.getTotal()}"></span>&nbsp;条数据
+                        </div>
+                        <!--遍历页数-->
+                        <!--th:each="i:${#numbers.sequence(1,page.getPages())}"-->
+                        <ul class="pagination">
+                            <li>
+                                <a th:if="${!page.hasPrevious()}" href="javascript:alert('已经是第一页啦！');">上一页</a>
+                                <a th:if="${page.hasPrevious()}"
+                                   th:href="@{'/menuManage?pageNum='+ ${page.getCurrent() - 1} + '&mtId='+${mtId}}">上一页
+                                </a>
+                            </li>
+                            <li th:each="i:${#numbers.sequence(1,page.getPages())}">
+                                <a th:if="${page.getCurrent() == i}"
+                                   th:href="@{'/menuManage?pageNum='+ ${i} + '&mtId='+${mtId}}" th:text="${i}"
+                                   style="background: #aefff8"></a>
+                                <a th:if="${!(page.getCurrent() == i)}"
+                                   th:href="@{'/menuManage?pageNum='+ ${i} + '&mtId='+${mtId}}" th:text="${i}"></a>
+                            </li>
+                            <li>
+                                <a th:if="${!page.hasNext()}" href="javascript:alert('已经是最后一页啦！');">下一页</a>
+                                <a th:if="${page.hasNext()}"
+                                   th:href="@{'/menuManage?pageNum='+ ${page.getCurrent() + 1} + '&mtId='+${mtId}}">下一页
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--更新图片模态框-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="margin: 0 auto;width: 450px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">上传图片</h4>
+                    </div>
+                    <form action="">
+                        <div class="modal-body text-center">
+                            <span id="myImg">
+                                <!--预览图片位置，默认图片-->
+                                <img src="/images/no_Image_default.jpg" class="img-rounded">
+                            </span>
+                        </div>
+                        <div class="modal-footer">
+                            <!--点击选择文件-->
+                            <button type="button" class="btn btn-default" onclick="$('#myFile').click();">浏览</button>
+                            <!--点击提交表单-->
+                            <button type="button" class="btn btn-primary" id="btn">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--1:隐藏表单 配合模态框-->
+        <form th:action="@{'/upLoadImg?mtId='+${mtId}}" method="post" enctype="multipart/form-data" id="myForm" class="form">
+            <input type="file" id="myFile" name="upLoadFile" style="display: none">
+        </form>
+
+        <!--新添菜品 模态框-->
+        <div class="modal fade" id="addMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin: 0 auto;width: 500px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="addModalLabel">请填充新添菜品数据</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--模块体填充数据-->
+                        <form action="">
+                            <div class="form-group">
+                                <label for="add-mdName" class="control-label">菜名：</label>
+                                <input type="text" name="mdName" class="form-control" id="add-mdName">
+                            </div>
+                            <div class="form-group">
+                                <label for="add-mdPrice" class="control-label">价格：</label>
+                                <input type="text" name="mdPrice" class="form-control" id="add-mdPrice" placeholder="请输入大于0的整数">
+                            </div>
+                            <div class="form-group">
+                                <label for="add-mdAmount" class="control-label">数量：</label>
+                                <input type="text" name="mdAmount" class="form-control" id="add-mdAmount" placeholder="请输入大于0的整数">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">新品标识：</label>
+                                是<input type="radio" name="mdNew" value="1" style="width: 20px" checked>&nbsp;&nbsp;&nbsp;
+                                否<input type="radio" name="mdNew" value="0" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">星值：</label>
+                                1<input type="radio" name="mdStar" value="1" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                                2<input type="radio" name="mdStar" value="2" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                                3<input type="radio" name="mdStar" value="3" style="width: 20px" checked>&nbsp;&nbsp;&nbsp;
+                                4<input type="radio" name="mdStar" value="4" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                                5<input type="radio" name="mdStar" value="5" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">添加到分类：</label>
+                                <span th:each="type:${types}">  <!--默认选中1-->
+                                    [[${type.getMtName()}]]
+                                    <input th:if="${type.getMtId() == 1}" type="radio" name="mtId" th:value="${type.getMtId()}" style="width: 20px" checked>
+                                    <input th:if="${type.getMtId() != 1}" type="radio" name="mtId" th:value="${type.getMtId()}" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="bindAdd()">新添</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--编辑菜单 模态框-->
+        <div class="modal fade" id="edMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="edUser-ModalLabel">修改菜品信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--模块体填充数据-->
+                        <form action="">
+                            <input type="hidden" name="mdId" id="ed-mdId">
+                            <div class="form-group">
+                                <label for="ed-mdName" class="control-label">菜名：</label>
+                                <input type="text" name="mdName" class="form-control" id="ed-mdName">
+                            </div>
+                            <div class="form-group">
+                                <label for="ed-mdPrice" class="control-label">价格：</label>
+                                <input type="text" name="mdPrice" class="form-control" id="ed-mdPrice" placeholder="请输入大于0的整数">
+                            </div>
+                            <div class="form-group">
+                                <label for="ed-mdAmount" class="control-label">数量：</label>
+                                <input type="text" name="mdAmount" class="form-control" id="ed-mdAmount" placeholder="请输入大于0的整数">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">新品标识：</label>
+                                是<input type="radio" name="ed-mdNew" value="1" style="width: 20px" checked>&nbsp;&nbsp;&nbsp;
+                                否<input type="radio" name="ed-mdNew" value="0" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">星值：</label>
+                                1<input type="radio" name="ed-mdStar" value="1" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                                2<input type="radio" name="ed-mdStar" value="2" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                                3<input type="radio" name="ed-mdStar" value="3" style="width: 20px" checked>&nbsp;&nbsp;&nbsp;
+                                4<input type="radio" name="ed-mdStar" value="4" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                                5<input type="radio" name="ed-mdStar" value="5" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">添加到分类：</label>
+                                <span th:each="type:${types}">  <!--默认选中1-->
+                                    [[${type.getMtName()}]]
+                                    <input th:if="${type.getMtId() == 1}" type="radio" name="ed-mtId" th:value="${type.getMtId()}" style="width: 20px" checked>
+                                    <input th:if="${type.getMtId() != 1}" type="radio" name="ed-mtId" th:value="${type.getMtId()}" style="width: 20px">&nbsp;&nbsp;&nbsp;
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="bindEditMenu()">完成更新</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--新添分类 模态框-->
+        <div class="modal fade" id="addType" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content"  style="margin: 0 auto;width: 300px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="addTypeModalLabel">请输入新类型名：</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--模块体填充数据-->
+                        <form action="">
+                            <div class="form-group">
+                                <label for="add-mtName" class="control-label">分类名：</label>
+                                <input type="text" name="mtName" class="form-control" id="add-mtName">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="addType()">新添</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--编辑分类 模态框-->
+        <div class="modal fade" id="editType" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin: 0 auto;width: 300px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="edType-ModalLabel">修改分类名</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--模块体填充数据-->
+                        <form action="">
+                            <div class="form-group">
+                                <label class="control-label">选择分类：</label>
+                                <br>
+                                <span th:each="type:${types}">  <!--默认不选中，radio传递的就是 mtId-->
+                                    [[${type.getMtName()}]]
+                                    <input  type="radio" name="edit-mtId" th:value="${type.getMtId()}" style="width: 20px">
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-mtName" class="control-label">重新改名为：</label>
+                                <input type="text" name="mtName" class="form-control" id="edit-mtName" placeholder="请先选择分类！" disabled>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="editType()">完成更新</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--删除分类 模态框-->#
+        <div class="modal fade" id="deteleType" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin: 0 auto;width: 300px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="deteleType-ModalLabel">删除分类</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--模块体填充数据-->
+                        <form action="">
+                            <div class="form-group">
+                                <label class="control-label">选择分类：</label>
+                                <br>
+                                <span th:each="type:${types}">  <!--默认不选中，radio传递的就是 mtId-->
+                                    [[${type.getMtName()}]]
+                                    <input  type="radio" name="delete-mtId" th:value="${type.getMtId()}" style="width: 20px">
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="deleteType()">确定删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script th:src="@{/main/js/menuManage.js}"></script>
+    </body>
+</html>
